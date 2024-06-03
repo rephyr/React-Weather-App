@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import SearchBar from './components/SearchBar';
 
 function App() {
   const [city, setCity] = useState('London');
@@ -15,16 +16,8 @@ function App() {
 
   return (
     <div className="App">
-      <div className="top-bar">
-        <h1>Weather App</h1>
-      </div>
       <header className="App-header">
-        <input
-          type="text"
-          value={city}
-          onChange={e => setCity(e.target.value)}
-          placeholder="Enter city"
-        />
+        <SearchBar city={city} setCity={setCity} />
         {weatherData && (
           <div>
             <h1>{weatherData.name}</h1>
