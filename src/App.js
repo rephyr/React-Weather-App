@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import SearchBar from './components/SearchBar';
+import SideBar from './components/SideBar/SideBar';
 
 function App() {
   const [city, setCity] = useState('London');
@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <SearchBar city={city} setCity={setCity} />
+        <SideBar city={city} setCity={setCity} />
         {weatherData && (
           <div>
             <h1>{weatherData.name}</h1>

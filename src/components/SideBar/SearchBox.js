@@ -1,4 +1,6 @@
 import React from 'react';
+import TextField from '@mui/material/TextField';
+import './SearchBox.css';
 
 function SearchBar({ city, setCity }) {
   const [inputValue, setInputValue] = React.useState('');
@@ -10,14 +12,12 @@ function SearchBar({ city, setCity }) {
 
   return (
     <form onSubmit={handleButtonClick}>
-      <input
-        type="text"
+      <TextField
+        label="Enter city"
         value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
-        placeholder="Enter city"
+        onChange={(e) => setInputValue(e.target.value)}
       />
       <button type="submit">Change City</button>
-      <div></div>
     </form>
   );
 }
