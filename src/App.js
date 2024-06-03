@@ -8,8 +8,7 @@ function App() {
 
   useEffect(() => {
     const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-    console.log(apiKey)
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
       .then(response => response.json())
       .then(data => setWeatherData(data));
   }, [city]);
@@ -21,7 +20,7 @@ function App() {
         {weatherData && (
           <div>
             <h1>{weatherData.name}</h1>
-            <h2>{weatherData.main.temp}</h2>
+            <h2>{Math.round(weatherData.main.temp)} C</h2>
           </div>
         )}
       </header>
