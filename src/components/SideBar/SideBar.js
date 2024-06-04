@@ -31,8 +31,8 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
           </div>
         </>
       )}
-      <ExtraWeatherData extraWeatherData={extraWeatherData} />
-    </div>
+      <ExtraWeatherData extraWeatherData={extraWeatherData} chanceOfRain={extraWeatherData ? extraWeatherData.chanceOfRain : null} />
+      </div>
   );
 }
 
