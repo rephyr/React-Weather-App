@@ -6,6 +6,6 @@ export const fetchWeatherData = (city) => {
 };
 
 export const fetchExtraWeatherData = (lat, lon) => {
-  return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&appid=${apiKey}`)
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
     .then(response => response.json());
 };
