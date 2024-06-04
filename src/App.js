@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
 import SideBar from './components/SideBar/SideBar';
+import useWeatherData from './hooks/useWeatherData';
 
 function App() {
-  const [city, setCity] = useState('London');
-  const [weatherData, setWeatherData] = useState(null);
-
-  useEffect(() => {
-    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
-      .then(response => response.json())
-      .then(data => setWeatherData(data));
-  }, [city]);
+  const [city, setCity] = React.useState('London');
+  const { weatherData, extraWeatherData } = useWeatherData(city);
 
   return (
     <div className="App">
       <header className="App-header">
-        <SideBar city={city} setCity={setCity} />
-        {weatherData && (
-          <div>
-            <h1>{weatherData.name}</h1>
-            <h2>{Math.round(weatherData.main.temp)} C</h2>
-          </div>
-        )}
+        <SideBar city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} />
       </header>
     </div>
   );
