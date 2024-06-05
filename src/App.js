@@ -13,8 +13,15 @@ function App() {
     <div className="App">
       <SideBar city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} />
         <div className="content">
-          <TopBox weatherData={weatherData} />
-          <TemperatureGraph forecastData={forecastData} />
+          <div class="sticky-container">
+            <div class="topbox">
+              <TopBox weatherData={weatherData} />
+            </div>
+          </div>
+        
+          <div className="bottom-container">
+            <TemperatureGraph className="TemperatureGraph" forecastData={forecastData} />
+          </div>
         </div>
     </div>
   );
