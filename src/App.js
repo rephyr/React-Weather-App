@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import SideBar from './components/SideBar/SideBar';
+import TopBox from './components/MainLayout/TopBox'; 
 import useWeatherData from './hooks/useWeatherData';
 
 function App() {
@@ -9,9 +10,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <SideBar city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} />
-      </header>
+      <SideBar city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} />
+        <div className="content">
+          <TopBox weatherData={weatherData} />
+        </div>
     </div>
   );
 }

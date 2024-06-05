@@ -23,9 +23,6 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
       </form>
       {weatherData && (
         <>
-          <div className="city-name">
-            <h1>{weatherData.name}</h1>
-          </div>
           <div className="weather-data">
             <h2>{Math.round(weatherData.main.temp)} C</h2>
           </div>
