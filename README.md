@@ -1,6 +1,10 @@
 # Weather App
 
-This is a weather forecasting application built with React. It fetches weather data from an API and displays a general forecast for that location.
+This is a weather forecasting application built with React. It fetches weather data from an API and displays a 24-hour forecast.
+
+## Work in Progress
+
+This project is a work in progress. I am actively developing this program.
 
 ## Project Structure
 
@@ -36,3 +40,5 @@ To build the application for production, run `npm run build`.
 ## Testing
 
 To run the tests, use `npm run test`.
+
+
