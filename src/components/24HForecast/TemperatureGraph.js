@@ -80,7 +80,7 @@ function TemperatureGraph({ forecastData}) {
                 <text x={adjustedX} y={textY + 50} fontSize="13" fill="white" textAnchor="middle">
                     {data.wind.speed} m/s
                 </text>
-                <image x={adjustedX - 17} y={textY + 60} width="30" height="30" href={
+                <image x={adjustedX - 15} y={textY+55} width="30" height="30" href={
                     `http://openweathermap.org/img/w/${data.weather[0].icon}.png`} />
             </g>
         );
