@@ -20,9 +20,8 @@ function App() {
             </div>
           </div>
           <div className="bottom-container">
-          {forecastData && weatherData.main && 
-                <TemperatureGraph className="TemperatureGraph" forecastData={forecastData} currentTemp={weatherData.main.temp} />
-          }          </div>
+            <TemperatureGraph className="TemperatureGraph" forecastData={forecastData}/>          
+          </div>
         </div>
     </div>
   );
