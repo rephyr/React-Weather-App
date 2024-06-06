@@ -1,17 +1,40 @@
 import React from 'react';
 import './ExtraWeatherData.css';
+import { WiThermometer, WiHumidity, WiRain, WiStrongWind,} from "weather-icons-react";
 
-function ExtraWeatherData({ extraWeatherData, chanceOfRain, uvi }) {
+function ExtraWeatherData({ extraWeatherData}) {
     return (
         extraWeatherData && extraWeatherData.main && (
-        <div className="extraWeatherData">
-            <p>Feels Like: {extraWeatherData.main.feels_like} C</p>
-            <p>Humidity: {extraWeatherData.main.humidity}%</p>
-            <p>Rain: {extraWeatherData.rain ? extraWeatherData.rain['1h'] : 'No rain'} mm</p>
-            <p>Wind Speed: {extraWeatherData.wind.speed} m/s</p>
-            <p>Chance of rain:{chanceOfRain}%</p>
-            {uvi && <p>UV Index: {uvi}</p>}
-        </div>
+            <div className="extraWeatherData">
+                <div className="weatherItem">
+                    <WiThermometer size={30} color="#fff" />
+                    <div>
+                        <p>Feels Like</p>
+                        <p>{Math.round(extraWeatherData.main.feels_like)} C</p>
+                    </div>
+                </div>
+                <div className="weatherItem">
+                    <WiHumidity size={30} color="#fff" />
+                    <div>
+                        <p>Humidity</p>
+                        <p>{extraWeatherData.main.humidity}%</p>
+                    </div>
+                </div>
+                <div className="weatherItem">
+                    <WiRain size={30} color="#fff" />
+                    <div>
+                        <p>Rain</p>
+                        <p>{extraWeatherData.rain ? extraWeatherData.rain['1h'] : 'No rain'} mm</p>
+                    </div>
+                </div>
+                <div className="weatherItem">
+                    <WiStrongWind size={30} color="#fff" />
+                    <div>
+                        <p>Wind</p>
+                        <p>{Math.round(extraWeatherData.wind.speed)} m/s</p>
+                    </div>
+                </div>
+            </div>
         )
     );
 }

@@ -1,3 +1,14 @@
 .extraWeatherData {
   color: black;
 }
+.weatherItem {
+  display: flex;
+  align-items: center;
+}
+
+.weatherItem > div {
+  margin-left: 10px;
+}
+.weatherItem{
+  color: #fff;
+}

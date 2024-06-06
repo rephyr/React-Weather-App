@@ -27,7 +27,6 @@
   background: rgb(119, 119, 119, 0.3);
   filter: blur(20px);
   z-index: -1;
-  -webkit-mask-image: radial-gradient(circle at center, transparent 0%, black 80%);
 }
 .search-field {
   display: flex;
