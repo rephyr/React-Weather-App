@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { line, curveCardinal } from 'd3';
 import './TemperatureGraph.css';
 
-function TemperatureGraph({ forecastData,}) {
+function TemperatureGraph({ forecastData}) {
     const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, text: "" });
     const svgRef = useRef(null);
 
