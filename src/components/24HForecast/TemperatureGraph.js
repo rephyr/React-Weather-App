@@ -37,6 +37,7 @@ function TemperatureGraph({ forecastData}) {
 
 
     // Create the line generator with the cardinal spline interpolation
+    // for a smooth curve 
     const lineGenerator = line().curve(curveCardinal);
     const pathData = lineGenerator(points);
 
