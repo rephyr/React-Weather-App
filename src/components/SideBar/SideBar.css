@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'Inter Light';
+  src: url('../../../fonts/static/Inter-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter Thin';
+  src: url('../../../fonts/static/Inter-Thin.ttf') format('truetype');
+}
+
 .sidebar {
   position: relative;
   width: 300px;
@@ -19,7 +29,10 @@
   z-index: -1;
   -webkit-mask-image: radial-gradient(circle at center, transparent 0%, black 80%);
 }
-
+.search-field {
+  display: flex;
+  justify-content: center;
+}
 .weather-data{
   color: black;
 }
@@ -28,6 +41,20 @@
   color: black;
 }
 
-.date::first-letter {
-  text-transform: uppercase;
+.date{
+  font-family: 'Inter Thin', sans-serif;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 0;
+}
+
+.temperature {
+  font-family: 'Inter Light', sans-serif;
+  font-weight: 100;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 90px; 
+  text-align: center; 
 }
