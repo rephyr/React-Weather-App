@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { line, curveCardinal } from 'd3';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import SvgIcon from '@mui/material/SvgIcon';
 import './TemperatureGraph.css';
 
 function TemperatureGraph({ forecastData}) {
@@ -20,7 +22,7 @@ function TemperatureGraph({ forecastData}) {
     // Create the points for the polyline with a relative x coordinate
     const points = filteredForecastData.map((data, index) => {
         const x = index / (filteredForecastData.length - 1);
-        const y = 200 - ((data.main.temp - minTemp) / (maxTemp - minTemp)) * 100 + 50; 
+        const y = 210 - ((data.main.temp - minTemp) / (maxTemp - minTemp)) * 100 + 50; 
         return [x, y];
     });;
 
@@ -79,7 +81,7 @@ function TemperatureGraph({ forecastData}) {
                     {new Date(data.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                 </text>
                 <text x={adjustedX} y={textY + 50} fontSize="13" fill="white" textAnchor="middle">
-                    {data.wind.speed} m/s
+                    {Math.round(data.wind.speed)} m/s               
                 </text>
                 <image x={adjustedX - 15} y={textY+55} width="30" height="30" href={
                     `http://openweathermap.org/img/w/${data.weather[0].icon}.png`} />
@@ -92,7 +94,10 @@ function TemperatureGraph({ forecastData}) {
             <svg className="temperature-graph" width={maxX - minX} height={maxY - minY} 
             viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`} ref={svgRef}>
                 <rect x={minX} y={minY} width={maxX - minX} height={maxY - minY} rx="20" ry="20" fill="rgba(128, 128, 128, 0.4)" />
-                <text x={minX + 10} y={minY + 20} fill="white">24 hour forecast</text>
+                <g transform={`translate(${minX + 15}, ${minY + 20})`}>
+                    <SvgIcon component={WatchLaterIcon} style={{ fill: "white" }} x={0} y={-8} viewBox="0 0 24 24" width="20" height="15" />
+                    <text x={22} y={5} fill="white">24 hour forecast</text>                
+                </g>
                 <path d={pathData} fill="none" stroke="white" />
                 {points.map((point, index) => (
                     <GraphElement point={point} data={filteredForecastData[index]} index={index} />
