@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'Inter Light';
+    src: url('../../../fonts/static/Inter-Light.ttf') format('truetype');
+}
+  
+@font-face {
+    font-family: 'Inter ExtraLight';
+    src: url('../../../fonts/static/Inter-Thin.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Inter Thin';
+    src: url('../../../fonts/static/Inter-Thin.ttf') format('truetype');
+}
+
+.top-box{
+    margin-top: 50px;
+}
+
+h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-family: 'Inter Thin', sans-serif;
+    color: #fff;
+    font-size: 80px;
+
+}
+
+h2 {
+    font-family: 'Inter Light', sans-serif;
+    color: #fff;
+    font-weight: 100;
+    font-size: 40px;
+    margin-top: 15px;
+    margin-left: 5px;
+
+}
+
+h3 {
+    margin-left: 5px;
+    margin-bottom: 15px;
+    font-family: 'Inter ExtraLight', sans-serif;
+    color: #fff;
+    font-weight: 100;
+    font-size: 25px;
+}
