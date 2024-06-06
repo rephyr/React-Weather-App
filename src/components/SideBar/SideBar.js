@@ -25,6 +25,9 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
         <>
           <div className="weather-data">
             <h2>{Math.round(weatherData.main.temp)} C</h2>
+            <p className="date">{new Date(weatherData.dt * 1000).toLocaleDateString(navigator.language, 
+              { weekday: 'long' })} | {new Date(weatherData.dt * 1000).toLocaleDateString(navigator.language, 
+              { day: 'numeric', month: 'long', year: 'numeric' })}</p>          
           </div>
         </>
       )}
