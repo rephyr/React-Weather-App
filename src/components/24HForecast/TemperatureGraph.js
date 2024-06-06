@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { line, curveCardinal } from 'd3';
 import './TemperatureGraph.css';
 
-function TemperatureGraph({ forecastData }) {
+function TemperatureGraph({ forecastData,}) {
     const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, text: "" });
     const svgRef = useRef(null);
 
@@ -32,7 +32,7 @@ function TemperatureGraph({ forecastData }) {
 
     // Adjust the x coordinate of the points
     points.forEach(point => {
-        point[0] = minX + 20 + point[0] * (maxX - minX - 20); 
+        point[0] = minX + 30 + point[0] * (maxX - minX - 20); 
     });
 
 
@@ -48,7 +48,9 @@ function TemperatureGraph({ forecastData }) {
         // Check if closestPointIndex is within the range of the forecastData array
         if (closestPointIndex >= 0 && closestPointIndex < forecastData.length) {
             const closestData = forecastData[closestPointIndex];
-            const titleText = `Time: ${new Date(closestData.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}, Temp: ${Math.round(closestData.main.temp)}°`;
+            const titleText = `Time: ${new Date(closestData.dt * 1000).toLocaleTimeString
+                ([], { hour: '2-digit', minute: '2-digit', hour12: false })}, 
+                Temp: ${Math.round(closestData.main.temp)}°`;
             setTooltip({ show: true, x: event.clientX, y: event.clientY, text: titleText });
         } else {
             // Hide the tooltip if closestPointIndex is out of range
@@ -62,38 +64,43 @@ function TemperatureGraph({ forecastData }) {
         const textAnchor = "middle"; 
         const textY = point[1] < 20 ? point[1] + 20 : point[1] - 10;
         const adjustedX = point[0]; 
-        const titleText = `Time: ${new Date(data.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}, Temp: ${Math.round(data.main.temp)}°`;
+        const titleText = `Time: ${new Date(data.dt * 1000).toLocaleTimeString([], 
+            { hour: '2-digit', minute: '2-digit', hour12: false })}, Temp: ${Math.round(data.main.temp)}°`;
     
         return (
-            <g key={index} onMouseEnter={(e) => { setTooltip({ show: true, x: e.clientX, y: e.clientY, text: titleText }); setHovered(true); }}>
-                <circle cx={adjustedX} cy={point[1]} r={hovered ? 4 : 2} fill="black" />
-                <text x={adjustedX} y={textY} fontSize="10" textAnchor={textAnchor}>
+            <g key={index} onMouseEnter={(e) => { setTooltip({ 
+                show: true, x: e.clientX, y: e.clientY, text: titleText }); setHovered(true); }}>
+                <circle cx={adjustedX} cy={point[1]} r={hovered ? 4 : 2} fill="white" />
+                <text x={adjustedX} y={textY} fontSize="15" fill="white" textAnchor={textAnchor}>
                     {Math.round(data.main.temp)}°
                 </text>
-                <text x={adjustedX} y={textY + 30} fontSize="10" textAnchor="middle">
+                <text x={adjustedX} y={textY + 30} fontSize="13" fill="white" textAnchor="middle">
                     {new Date(data.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                 </text>
-                <text x={adjustedX} y={textY + 50} fontSize="10" textAnchor="middle">
+                <text x={adjustedX} y={textY + 50} fontSize="13" fill="white" textAnchor="middle">
                     {data.wind.speed} m/s
                 </text>
-                <image x={adjustedX - 10} y={textY + 60} width="20" height="20" href={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`} />
+                <image x={adjustedX - 17} y={textY + 60} width="30" height="30" href={
+                    `http://openweathermap.org/img/w/${data.weather[0].icon}.png`} />
             </g>
         );
     };
     
     return (
         <div onMouseMove={handleMouseMove} onMouseLeave={() => setTooltip({ show: false, x: 0, y: 0, text: "" })}>
-            <svg className="temperature-graph" width={maxX - minX} height={maxY - minY} viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`}
-                ref={svgRef}>
-                <rect x={minX} y={minY} width={maxX - minX} height={maxY - minY} rx="20" ry="20" fill="rgba(128, 128, 128, 0.7)" />
+            <svg className="temperature-graph" width={maxX - minX} height={maxY - minY} 
+            viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`} ref={svgRef}>
+                <rect x={minX} y={minY} width={maxX - minX} height={maxY - minY} rx="20" ry="20" fill="rgba(128, 128, 128, 0.4)" />
                 <text x={minX + 10} y={minY + 20} fill="white">24 hour forecast</text>
-                <path d={pathData} fill="none" stroke="black" />
+                <path d={pathData} fill="none" stroke="white" />
                 {points.map((point, index) => (
                     <GraphElement point={point} data={filteredForecastData[index]} index={index} />
                 ))}
             </svg>
             {tooltip.show && 
-                <div style={{ position: 'fixed', top: tooltip.y, left: tooltip.x, backgroundColor: 'white', border: '1px solid black', padding: '10px' }}>
+                <div style={{ position: 'fixed', top: tooltip.y, left: tooltip.x, 
+                backgroundColor: 'white', border: '1px solid black', padding: '10px' }}>
+
                     {tooltip.text}
                 </div>
             }
