@@ -18,23 +18,23 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
   return (
     <div className="sidebar">
       <form onSubmit={handleButtonClick}>
-      <div className="search-field">
-      <input
+        <div className="search-field">
+          <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             style={{
-                backgroundColor: 'white',
-                borderRadius: '5px',
-                height: '20px',
-                border: 'none',
-                paddingLeft: '35px',
-                color: '#969696', 
-                fontFamily: 'Arial'
+              backgroundColor: 'white',
+              borderRadius: '5px',
+              height: '20px',
+              border: 'none',
+              paddingLeft: '35px',
+              color: '#969696', 
+              fontFamily: 'Arial'
             }}
-        />
+          />
           <SearchIcon style={{ position: 'absolute', left: '55px', top: '20px', fontSize: '20px', color: '#969696' }} />      
-      </div>
+        </div>
       </form>
       {weatherData && (
         <>
@@ -54,7 +54,7 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
         </>
       )}
       <ExtraWeatherData extraWeatherData={extraWeatherData} chanceOfRain={extraWeatherData ? extraWeatherData.chanceOfRain : null} />
-      </div>
+    </div>
   );
 }
 

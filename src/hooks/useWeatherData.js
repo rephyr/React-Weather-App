@@ -1,4 +1,3 @@
-// useWeatherData.js
 import { useState, useEffect } from 'react';
 import { fetchWeatherData, fetchExtraWeatherData, fetch24hForecast } from '../api/weatherApi';
 
@@ -31,7 +30,11 @@ const useWeatherData = (city) => {
           });
       })
       .catch(err => {
-        setError(`Error fetching weather data: ${err.message}`);
+        if (err.message.includes('city not found')) {
+          setError('City not found. Please try again.');
+        } else {
+          setError(`Error fetching weather data: ${err.message}`);
+        }
       });
   }, [city]);
 

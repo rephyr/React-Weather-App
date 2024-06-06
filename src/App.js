@@ -7,12 +7,12 @@ import useWeatherData from './hooks/useWeatherData';
 
 function App() {
   const [city, setCity] = React.useState('London');
-  const { weatherData, extraWeatherData, forecastData } = useWeatherData(city);
+  const { weatherData, extraWeatherData, forecastData, error } = useWeatherData(city);
 
   return (
     <div className="App">
       <div className="background"></div>
-      <SideBar className="sidebar" city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} />
+      <SideBar className="sidebar" city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} error={error} />
         <div className="content">
           <div className="sticky-container">
             <div className="topbox">
@@ -26,4 +26,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
