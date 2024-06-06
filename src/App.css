@@ -2,6 +2,38 @@
   box-sizing: border-box;
 }
 
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('./assets/storm-clouds.jpg');  
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  z-index: -1;
+  height: 100%;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+  backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to right, black 20%, transparent);
+}
+
 .App {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -24,11 +56,4 @@
   margin-bottom: 20px;
   margin-top: auto;
   overflow: auto;
-}
-
-body {
-  background-image: url('./assets/storm-clouds.jpg');  
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
 }

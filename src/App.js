@@ -11,20 +11,20 @@ function App() {
 
   return (
     <div className="App">
-      <SideBar city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} />
+      <div className="background"></div>
+      <SideBar className="sidebar" city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} />
         <div className="content">
-          <div class="sticky-container">
-            <div class="topbox">
+          <div className="sticky-container">
+            <div className="topbox">
               <TopBox weatherData={weatherData} />
             </div>
           </div>
-        
           <div className="bottom-container">
-            <TemperatureGraph className="TemperatureGraph" forecastData={forecastData} />
-          </div>
+          {forecastData && weatherData.main && 
+                <TemperatureGraph className="TemperatureGraph" forecastData={forecastData} currentTemp={weatherData.main.temp} />
+          }          </div>
         </div>
     </div>
   );
 }
-
 export default App;
