@@ -45,7 +45,7 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
             {
               `${capitalizeFirstLetter(new Date(weatherData.dt * 1000).toLocaleDateString(navigator.language, 
               { weekday: 'long' }))} | ${new Date(weatherData.dt * 1000).toLocaleDateString(navigator.language, 
-              { day: 'numeric', month: 'long', year: 'numeric' })
+              { day: 'numeric', month: 'short', year: 'numeric' })
               .split(' ')
               .map(word => word.length > 1 ? capitalizeFirstLetter(word) : word)
               .join(' ')}` 

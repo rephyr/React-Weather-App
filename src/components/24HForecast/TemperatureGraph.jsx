@@ -3,6 +3,7 @@ import { line, curveCardinal } from 'd3';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import SvgIcon from '@mui/material/SvgIcon';
 import './TemperatureGraph.css';
+import GraphElement from './GraphElement';
 
 function TemperatureGraph({ forecastData}) {
     const [tooltip, setTooltip] = useState({ show: false, x: 0, y: 0, text: "" });
@@ -16,10 +17,9 @@ function TemperatureGraph({ forecastData}) {
     const minTemp = Math.min(...forecastData.map(data => data.main.temp));
     const maxTemp = Math.max(...forecastData.map(data => data.main.temp));
 
-    // Select the first data point and every third data point after that
     const filteredForecastData = forecastData.filter((_, index) => index % 2 === 0);
     
-    // Create the points for the polyline with a relative x coordinate
+    // Create the points for the line with a relative x coordinate
     const points = filteredForecastData.map((data, index) => {
         const x = index / (filteredForecastData.length - 1);
         const y = 210 - ((data.main.temp - minTemp) / (maxTemp - minTemp)) * 100 + 50; 
@@ -60,34 +60,6 @@ function TemperatureGraph({ forecastData}) {
             setTooltip({ show: false, x: 0, y: 0, text: "" });
         }
     };
-
-    const GraphElement = ({ point, data, index }) => {
-        const [hovered, setHovered] = useState(false);
-        if (index === points.length - 1) return null;
-        const textAnchor = "middle"; 
-        const textY = point[1] < 20 ? point[1] + 20 : point[1] - 10;
-        const adjustedX = point[0]; 
-        const titleText = `Time: ${new Date(data.dt * 1000).toLocaleTimeString([], 
-            { hour: '2-digit', minute: '2-digit', hour12: false })}, Temp: ${Math.round(data.main.temp)}°`;
-    
-        return (
-            <g key={index} onMouseEnter={(e) => { setTooltip({ 
-                show: true, x: e.clientX, y: e.clientY, text: titleText }); setHovered(true); }}>
-                <circle cx={adjustedX} cy={point[1]} r={hovered ? 4 : 2} fill="white" />
-                <text x={adjustedX} y={textY} fontSize="15" fill="white" textAnchor={textAnchor}>
-                    {Math.round(data.main.temp)}°
-                </text>
-                <text x={adjustedX} y={textY + 30} fontSize="13" fill="white" textAnchor="middle">
-                    {new Date(data.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
-                </text>
-                <text x={adjustedX} y={textY + 50} fontSize="13" fill="white" textAnchor="middle">
-                    {Math.round(data.wind.speed)} m/s               
-                </text>
-                <image x={adjustedX - 15} y={textY+55} width="30" height="30" href={
-                    `http://openweathermap.org/img/w/${data.weather[0].icon}.png`} />
-            </g>
-        );
-    };
     
     return (
         <div onMouseMove={handleMouseMove} onMouseLeave={() => setTooltip({ show: false, x: 0, y: 0, text: "" })}>
@@ -99,8 +71,15 @@ function TemperatureGraph({ forecastData}) {
                     <text x={22} y={5} fill="white">24 hour forecast</text>                
                 </g>
                 <path d={pathData} fill="none" stroke="white" />
-                {points.map((point, index) => (
-                    <GraphElement point={point} data={filteredForecastData[index]} index={index} />
+                {filteredForecastData.map((data, index) => (
+                    <GraphElement
+                        key={index}
+                        point={points[index]}
+                        data={data}
+                        index={index}
+                        points={points} 
+                        setTooltip={setTooltip} 
+                    />
                 ))}
             </svg>
             {tooltip.show && 
