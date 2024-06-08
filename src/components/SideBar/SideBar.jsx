@@ -1,6 +1,8 @@
 import React from 'react';
 import ExtraWeatherData from './ExtraWeatherData';
+import TimeGraph from './TimeGraph';
 import SearchIcon from '@mui/icons-material/Search';
+import useNextDaySunrise from '../../hooks/useNextDaySunrise';
 import './SideBar.css';
 
 function SideBar({ setCity, weatherData, extraWeatherData }) {
@@ -15,6 +17,8 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  const { sunrise: nextDaySunrise } = useNextDaySunrise(weatherData?.coord?.lat, weatherData?.coord?.lon);
+  
   return (
     <div className="sidebar">
       <form onSubmit={handleButtonClick}>
@@ -54,6 +58,11 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
         </>
       )}
       <ExtraWeatherData extraWeatherData={extraWeatherData} chanceOfRain={extraWeatherData ? extraWeatherData.chanceOfRain : null} />
+      <TimeGraph
+        sunrise={weatherData?.sys?.sunrise}
+        sunset={weatherData?.sys?.sunset}
+        nextDaySunrise={nextDaySunrise}
+      />
     </div>
   );
 }
