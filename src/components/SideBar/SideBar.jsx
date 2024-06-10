@@ -58,11 +58,12 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
         </>
       )}
       <ExtraWeatherData extraWeatherData={extraWeatherData} chanceOfRain={extraWeatherData ? extraWeatherData.chanceOfRain : null} />
-      <TimeGraph
-        sunrise={weatherData?.sys?.sunrise}
-        sunset={weatherData?.sys?.sunset}
-        nextDaySunrise={nextDaySunrise}
-      />
+      {weatherData && weatherData.sys && weatherData.sys.sunrise && weatherData.sys.sunset && nextDaySunrise ? (
+        <TimeGraph
+          sunrise={weatherData.sys.sunrise}
+          sunset={weatherData.sys.sunset}
+          nextDaySunrise={nextDaySunrise}
+        />) : null}
     </div>
   );
 }
