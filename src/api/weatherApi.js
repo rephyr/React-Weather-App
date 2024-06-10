@@ -18,32 +18,30 @@ export const fetchExtraWeatherData = (lat, lon) => {
 };
 
 export const fetch24hForecast = (lat, lon) => {
-  // Get the user's current time zone
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log('User time zone:', timeZone); 
-
-  return fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&cnt=24`)
+  return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`)
     .then(response => response.json())
     .then(data => {
-      console.log('API response:', data);
+      const timeZoneOffsetInSeconds = data.timezone;
 
-      if (!data.list) {
-        console.error('Error: API response does not include a "list" property');
-        return [];
-      }
+      return fetch(`https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&cnt=24`)
+        .then(response => response.json())
+        .then(forecastData => {
+          if (!forecastData.list) {
+            console.error('Error: API response does not include a "list" property');
+            return [];
+          }
 
-      // Convert the dt_txt field to the user's local time
-      const forecast24h = data.list.map(item => {
-        const dtWithOffset = item.dt_txt + '+00:00';
-        const localTime = new Date(dtWithOffset).toLocaleString('en-US', { timeZone: timeZone });
+          const forecast24h = forecastData.list.map(item => {
+            const utcDate = new Date(item.dt_txt + 'Z');
+            const localDate = new Date(utcDate.getTime() + timeZoneOffsetInSeconds * 1000);
 
-        return {
-          ...item,
-          dt_txt: localTime
-        };
-      });
-
-      return forecast24h;
+            return {
+              ...item,
+              dt_txt: localDate.toISOString().replace('Z', '')
+            };
+          });
+          return forecast24h;
+        });
     });
 };
 
