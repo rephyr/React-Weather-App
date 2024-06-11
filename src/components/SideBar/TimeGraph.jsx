@@ -5,7 +5,7 @@ import sunMoon from '../../assets/moon.png';
 
 function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
   const svgWidth = 250;
-  const svgHeight = 150;
+  const svgHeight = 250;
 
   // Convert UNIX timestamp to readable time
   const convertToReadableTime = (unixTime) => {
@@ -72,7 +72,7 @@ function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
 
   return (
     <svg className="timeGraph" width={svgWidth} height={svgHeight}>
-      <rect x="0" y="0" width={svgWidth} height={svgHeight} fill="rgba(128, 128, 128, 0.4)" />
+      <rect x="0" y="0" width={svgWidth} height={svgHeight} fill="rgba(128, 128, 128, 0.4)" rx="20" ry="20" />      
       <circle cx={fixedSunsetPositionX} cy={svgHeight / 2} r="3" fill="white" stroke="white" strokeWidth="2" />
       <circle cx={fixedNextDaySunrisePositionX} cy={svgHeight / 2} r="3" fill="white" stroke="white" strokeWidth="2" />
       <path d={pathData} stroke="white" fill="none" />
