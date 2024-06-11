@@ -68,7 +68,7 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
       )}
       <ExtraWeatherData extraWeatherData={extraWeatherData} chanceOfRain={extraWeatherData ? extraWeatherData.chanceOfRain : null} />
       {weatherData && weatherData.sys && weatherData.sys.sunrise && weatherData.sys.sunset && nextDaySunrise ? (
-        <TimeGraph
+        <TimeGraph className="timeGraph"
           sunrise={convertToTimeZoneUnix(weatherData.sys.sunrise, weatherData.timezone)}
           sunset={convertToTimeZoneUnix(weatherData.sys.sunset, weatherData.timezone)}
           nextDaySunrise={nextDaySunrise}

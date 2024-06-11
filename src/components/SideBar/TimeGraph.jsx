@@ -1,11 +1,26 @@
 import React from 'react';
+import './TimeGraph.css';
+import sunImage from '../../assets/sun.png';
+import sunMoon from '../../assets/moon.png';
 
 function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
-  console.log(sunrise, sunset, nextDaySunrise, timeInLocation);
   const svgWidth = 250;
   const svgHeight = 150;
-  const dayColor = 'skyblue';
-  const nightColor = 'darkblue';
+
+  // Convert UNIX timestamp to readable time
+  const convertToReadableTime = (unixTime) => {
+    const date = new Date(unixTime * 1000);
+    const hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+};
+
+  const sunriseTime = convertToReadableTime(sunrise);
+  const sunsetTime = convertToReadableTime(sunset);
+  const nextDaySunriseTime = convertToReadableTime(nextDaySunrise);
 
   // Determine if it's daytime or nighttime
   const isDaytime = timeInLocation >= sunrise && timeInLocation <= sunset;
@@ -37,7 +52,6 @@ function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
     let timeRange = nextDaySunrise - sunset + 24 * 3600; 
     let timeProgress;
 
-    // Was a bug with midnight but this fixed it dont know why
     if (timeInLocation >= sunset) {
       // Time from sunset to timeInLocation
       timeProgress = (timeInLocation - sunset) / timeRange;
@@ -57,12 +71,34 @@ function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
   const zeroLineY = svgHeight / 2;
 
   return (
-    <svg width={svgWidth} height={svgHeight} style={{ border: '1px solid black', background: isDaytime ? dayColor : nightColor }}>
-      <path d={pathData} stroke="black" fill="none" />
-      <line x1="0" y1={zeroLineY} x2={svgWidth} y2={zeroLineY} stroke="gray" strokeWidth="2" />
-      <circle cx={fixedSunsetPositionX} cy={svgHeight / 2} r="5" fill="orange" /> 
-      <circle cx={fixedNextDaySunrisePositionX} cy={svgHeight / 2} r="5" fill="orange" /> 
-      <circle cx={currentTimePositionX} cy={currentTimePositionY} r="5" fill="red" />
+    <svg className="timeGraph" width={svgWidth} height={svgHeight}>
+      <rect x="0" y="0" width={svgWidth} height={svgHeight} fill="rgba(128, 128, 128, 0.4)" />
+      <circle cx={fixedSunsetPositionX} cy={svgHeight / 2} r="3" fill="white" stroke="white" strokeWidth="2" />
+      <circle cx={fixedNextDaySunrisePositionX} cy={svgHeight / 2} r="3" fill="white" stroke="white" strokeWidth="2" />
+      <path d={pathData} stroke="white" fill="none" />
+      <line x1="0" y1={zeroLineY} x2={svgWidth} y2={zeroLineY} stroke="white" strokeWidth="2" />
+      {isDaytime ? (
+        <image xlinkHref={sunImage} x={currentTimePositionX - 10} y={currentTimePositionY - 10} height="20" width="20" />
+      ) : (
+        <image xlinkHref={sunMoon} x={currentTimePositionX - 10} y={currentTimePositionY - 8} height="15" width="15" />
+      )}
+      <line x1={fixedSunsetPositionX} y1={svgHeight / 2} x2={fixedSunsetPositionX} y2={svgHeight / 4} stroke="white" strokeWidth="1" strokeDasharray="2,2" />
+      <line x1={fixedNextDaySunrisePositionX} y1={svgHeight / 2} x2={fixedNextDaySunrisePositionX} y2={svgHeight / 4} stroke="white" strokeWidth="1" strokeDasharray="2,2" />
+      {isDaytime ? (
+        <>
+          <text x={fixedSunsetPositionX} y={svgHeight / 8} fill="white" fontSize="12" textAnchor="middle">Sunrise</text>
+          <text x={fixedSunsetPositionX} y={svgHeight / 4.5} fill="white" fontSize="12" textAnchor="middle">{sunriseTime}</text>
+          <text x={fixedNextDaySunrisePositionX} y={svgHeight / 8} fill="white" fontSize="12" textAnchor="middle">Sunset</text>
+          <text x={fixedNextDaySunrisePositionX} y={svgHeight / 4.5} fill="white" fontSize="12" textAnchor="middle">{sunsetTime}</text>
+        </>
+      ) : (
+        <>
+          <text x={fixedSunsetPositionX} y={svgHeight / 8} fill="white" fontSize="12" textAnchor="middle">Sunset</text>
+          <text x={fixedSunsetPositionX} y={svgHeight / 4.5} fill="white" fontSize="12" textAnchor="middle">{sunsetTime}</text>
+          <text x={fixedNextDaySunrisePositionX} y={svgHeight / 8} fill="white" fontSize="12" textAnchor="middle">Sunrise</text>
+          <text x={fixedNextDaySunrisePositionX} y={svgHeight / 4.5} fill="white" fontSize="12" textAnchor="middle">{nextDaySunriseTime}</text>
+        </>
+      )}
     </svg>
   );
 }
