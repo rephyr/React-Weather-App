@@ -6,6 +6,7 @@ export const fetchWeatherData = (city) => {
       if (response.status !== 200) {
         throw new Error('City not found');
       }
+
       return response.json();
     })
     .then(data => data);
@@ -27,7 +28,6 @@ export const fetch24hForecast = (lat, lon) => {
         .then(response => response.json())
         .then(forecastData => {
           if (!forecastData.list) {
-            console.error('Error: API response does not include a "list" property');
             return [];
           }
 
@@ -66,24 +66,23 @@ export const fetchNextDaySunrise = (lat, lon) => {
           const minutes = timeParts[1];
           const seconds = timeParts[2];
           const amPm = dateTimeParts[1];
-      
+
           if (amPm === 'PM' && hours < 12) {
               hours += 12;
           } else if (amPm === 'AM' && hours === 12) {
               hours = 0;
           }
-      
+
           const hoursFormatted = hours.toString().padStart(2, '0');
-      
-          // Reconstruct the date-time string in 24-hour format
-          const dateTimeString = `${formattedDate}T${hoursFormatted}:${minutes}:${seconds}`;
-          console.log(dateTimeString);
+
+          /// Reconstruct the date-time string in 24-hour format, assuming the time is in UTC
+          const dateTimeStringWithTimeZone = `${formattedDate}T${hoursFormatted}:${minutes}:${seconds}Z`;
+
           // Create the Date object
-          const sunriseDate = new Date(dateTimeString);
-            
+          const sunriseDate = new Date(dateTimeStringWithTimeZone);
+
           // Convert the Date object to a Unix timestamp
           const sunriseTimestamp = Math.floor(sunriseDate.getTime() / 1000);
-
           resolve(sunriseTimestamp);
         } else {
           reject('Failed to fetch next day\'s sunrise time');
