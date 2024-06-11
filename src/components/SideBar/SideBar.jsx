@@ -18,6 +18,15 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
   }
 
   const { sunrise: nextDaySunrise } = useNextDaySunrise(weatherData?.coord?.lat, weatherData?.coord?.lon);
+
+  function convertToTimeZoneUnix(time, timeZoneOffsetInSeconds) {
+    const localTimeUnix = time + timeZoneOffsetInSeconds;
+    return localTimeUnix;
+  }
+
+  function adjustTimeToTimeZone(time, timeZoneOffsetInSeconds) {
+    return time + timeZoneOffsetInSeconds;
+  }
   
   return (
     <div className="sidebar">
@@ -60,10 +69,12 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
       <ExtraWeatherData extraWeatherData={extraWeatherData} chanceOfRain={extraWeatherData ? extraWeatherData.chanceOfRain : null} />
       {weatherData && weatherData.sys && weatherData.sys.sunrise && weatherData.sys.sunset && nextDaySunrise ? (
         <TimeGraph
-          sunrise={weatherData.sys.sunrise}
-          sunset={weatherData.sys.sunset}
+          sunrise={convertToTimeZoneUnix(weatherData.sys.sunrise, weatherData.timezone)}
+          sunset={convertToTimeZoneUnix(weatherData.sys.sunset, weatherData.timezone)}
           nextDaySunrise={nextDaySunrise}
-        />) : null}
+          timeInLocation={adjustTimeToTimeZone(extraWeatherData.dt, extraWeatherData.timezone)}
+          />
+      ) : null}
     </div>
   );
 }
