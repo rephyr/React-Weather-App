@@ -1,45 +1,68 @@
 import React from 'react';
 
-function TimeGraph({ sunrise, sunset, nextDaySunrise }) {
+function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
+  console.log(sunrise, sunset, nextDaySunrise, timeInLocation);
   const svgWidth = 250;
   const svgHeight = 150;
-  // Ensure time is in seconds; adjust as necessary to match your data
-  const currentTime = Date.now() / 1000;
-  const totalCycleLength = nextDaySunrise - sunrise;
+  const dayColor = 'skyblue';
+  const nightColor = 'darkblue';
 
-  // Determine if it's day or night
-  const isDaytime = currentTime >= sunrise && currentTime <= sunset;
+  // Determine if it's daytime or nighttime
+  const isDaytime = timeInLocation >= sunrise && timeInLocation <= sunset;
+  const isNighttime = timeInLocation > sunset || timeInLocation < sunrise;
 
-  // Calculate positions
-  const leftPosition = isDaytime ? sunrise : sunset;
-  const rightPosition = isDaytime ? sunset : nextDaySunrise;
+  // Too hard for me calculate just hardcode the positions
+  const fixedSunsetPositionX = svgWidth * 0.25; 
+  const fixedNextDaySunrisePositionX = svgWidth * 0.75;
 
-  // Function to calculate Y position based on time
-  const calculateYPosition = (time) => {
-    const phaseShift = isDaytime ? 0 : Math.PI;
-    const frequency = (2 * Math.PI) / totalCycleLength;
-    const x = time - sunrise;
-    return svgHeight / 2 + (svgHeight / 4) * Math.sin(frequency * x + phaseShift);
-  };
+  // Sine wave parameters
+  const amplitude = svgHeight / 4;
+  const phaseShift = Math.PI / 2;
+  const frequencyAdjusted = 2 * Math.PI / svgWidth;
 
-  // Generate points for the path
-  const points = [];
-  for (let t = leftPosition; t <= rightPosition; t += totalCycleLength / svgWidth) {
-    const x = ((t - leftPosition) / (rightPosition - leftPosition)) * svgWidth;
-    const y = calculateYPosition(t);
-    points.push(`${x},${y}`);
+  // Adjust amplitude and vertical shift
+  const amplitudeAdjusted = isDaytime ? -amplitude : amplitude;
+  const verticalShiftAdjusted = svgHeight / 2;
+
+  // Generate path data for the adjusted sine wave
+  let pathData = "M";
+  for (let x = 0; x <= svgWidth; x++) {
+    const y = amplitudeAdjusted * Math.sin(frequencyAdjusted * x - phaseShift) + verticalShiftAdjusted;
+    pathData += ` ${x},${y}`;
   }
-  const pathData = `M ${points.join(' L ')}`;
 
-  // Current position
-  const currentPositionX = ((currentTime - leftPosition) / (rightPosition - leftPosition)) * svgWidth;
-  const currentPosY = calculateYPosition(currentTime);
+  // Calculate the X position for the current time based on whether it's day or night
+  let currentTimePositionX;
+  if (isNighttime) {
+    let timeRange = nextDaySunrise - sunset + 24 * 3600; 
+    let timeProgress;
+
+    // Was a bug with midnight but this fixed it dont know why
+    if (timeInLocation >= sunset) {
+      // Time from sunset to timeInLocation
+      timeProgress = (timeInLocation - sunset) / timeRange;
+    } else {
+      // Time from sunset through midnight to timeInLocation
+      timeProgress = (timeInLocation + (24 * 3600 - sunset)) / timeRange;
+    }
+    currentTimePositionX = fixedSunsetPositionX + timeProgress * (fixedNextDaySunrisePositionX - fixedSunsetPositionX);
+  } else {
+    let timeRange = sunset - sunrise;
+    let timeProgress = (timeInLocation - sunrise) / timeRange;
+    currentTimePositionX = fixedSunsetPositionX + timeProgress * (fixedNextDaySunrisePositionX - fixedSunsetPositionX);
+  }
+
+  // Calculate Y position for the current time using the adjusted sine wave equation
+  const currentTimePositionY = amplitudeAdjusted * Math.sin(frequencyAdjusted * currentTimePositionX - phaseShift) + verticalShiftAdjusted;
+  const zeroLineY = svgHeight / 2;
 
   return (
-    <svg width={svgWidth} height={svgHeight} viewBox={`0 0 ${svgWidth} ${svgHeight}`} style={{ border: '1px solid black' }}>
-      <line x1="0" y1={svgHeight / 2} x2={svgWidth} y2={svgHeight / 2} stroke="grey" strokeWidth="1" />
+    <svg width={svgWidth} height={svgHeight} style={{ border: '1px solid black', background: isDaytime ? dayColor : nightColor }}>
       <path d={pathData} stroke="black" fill="none" />
-      <circle cx={currentPositionX} cy={currentPosY} r={5} fill="blue" />
+      <line x1="0" y1={zeroLineY} x2={svgWidth} y2={zeroLineY} stroke="gray" strokeWidth="2" />
+      <circle cx={fixedSunsetPositionX} cy={svgHeight / 2} r="5" fill="orange" /> 
+      <circle cx={fixedNextDaySunrisePositionX} cy={svgHeight / 2} r="5" fill="orange" /> 
+      <circle cx={currentTimePositionX} cy={currentTimePositionY} r="5" fill="red" />
     </svg>
   );
 }
