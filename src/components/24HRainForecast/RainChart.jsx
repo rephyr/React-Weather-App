@@ -77,6 +77,7 @@ function RainChart({ forecastData }) {
               const {width, height} = chart;
           
               // Function to draw a rounded rectangle
+              // ???????
               function drawRoundedRect(ctx, x, y, width, height, radius) {
                 ctx.beginPath();
                 ctx.moveTo(x + radius, y);
