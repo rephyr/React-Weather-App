@@ -1,7 +1,6 @@
 import React from 'react';
 import './TimeGraph.css';
 import sunImage from '../../assets/sun.png';
-import sunMoon from '../../assets/moon.png';
 
 function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
   const svgWidth = 250;
@@ -77,11 +76,7 @@ function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
       <circle cx={fixedNextDaySunrisePositionX} cy={svgHeight / 2} r="3" fill="white" stroke="white" strokeWidth="2" />
       <path d={pathData} stroke="white" fill="none" />
       <line x1="0" y1={zeroLineY} x2={svgWidth} y2={zeroLineY} stroke="white" strokeWidth="2" />
-      {isDaytime ? (
-        <image xlinkHref={sunImage} x={currentTimePositionX - 10} y={currentTimePositionY - 10} height="20" width="20" />
-      ) : (
-        <image xlinkHref={sunMoon} x={currentTimePositionX - 10} y={currentTimePositionY - 8} height="15" width="15" />
-      )}
+      <image xlinkHref={sunImage} x={currentTimePositionX - 10} y={currentTimePositionY - 10} height="20" width="20" />
       <line x1={fixedSunsetPositionX} y1={svgHeight / 2} x2={fixedSunsetPositionX} y2={svgHeight / 4} stroke="white" strokeWidth="1" strokeDasharray="2,2" />
       <line x1={fixedNextDaySunrisePositionX} y1={svgHeight / 2} x2={fixedNextDaySunrisePositionX} y2={svgHeight / 4} stroke="white" strokeWidth="1" strokeDasharray="2,2" />
       {isDaytime ? (
