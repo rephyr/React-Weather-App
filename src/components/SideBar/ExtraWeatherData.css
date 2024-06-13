@@ -1,5 +1,6 @@
 .extraWeatherData {
   color: black;
+  margin-left: 11px;
 }
 .weatherItem {
   display: flex;
@@ -11,4 +12,11 @@
 }
 .weatherItem{
   color: #fff;
+}
+.weatherItem > div > p:first-child {
+  margin-bottom: 5px;
+}
+
+.weatherItem > div > p:last-child {
+  margin-top: 2px;
 }
