@@ -7,7 +7,16 @@ body, html {
   margin: 0;
   padding: 0;
 }
-
+.App > .sidebar {
+  grid-column: 1 / 2;
+  overflow-y: auto; /* Optional: if your sidebar content is long */
+}
+.App > .content-container {
+  grid-column: 2 / 3;
+  overflow-y: auto; /* Enable scrolling for content */
+  display: flex;
+  flex-direction: column;
+}
 .background {
   position: absolute;
   top: 0;
@@ -37,23 +46,20 @@ body, html {
 .App {
   display: grid;
   grid-template-columns: 300px 1fr;
-  overflow: hidden;
+  height: 100vh; /* Make .App fill the viewport */
+  overflow: auto; /* Enable scrolling within .App */
 }
 
 .content {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-  overflow: auto; 
-}
-
-.sticky-container {
-  position: sticky;
-  top: 0;
 }
 
 .bottom-container {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   margin-top: auto;
-  overflow: auto;
+}
+.temperature-graph-container {
+  margin-bottom: 10px;
 }
