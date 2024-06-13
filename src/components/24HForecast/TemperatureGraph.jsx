@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { line, curveCardinal } from 'd3';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import SvgIcon from '@mui/material/SvgIcon';
-import './TemperatureGraph.css';
 import GraphElement from './GraphElement';
 
 function TemperatureGraph({ forecastData}) {
