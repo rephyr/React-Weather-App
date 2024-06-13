@@ -49,10 +49,14 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
           <SearchIcon style={{ position: 'absolute', left: '55px', top: '20px', fontSize: '20px', color: '#969696' }} />      
         </div>
       </form>
-      {weatherData && (
+      {weatherData?.main && (
         <>
           <div className="weather-data">
-            <h2 className="temperature">{Math.round(weatherData.main.temp)}°C</h2>          
+            <h2 className="temperature">{Math.round(weatherData.main.temp)}°C</h2>
+            <p className="temp-range">
+              <span className="temp-min">↓ {Math.round(extraWeatherData?.main?.temp_min)}°C</span>
+              <span className="temp-max"> ↑ {Math.round(extraWeatherData?.main?.temp_max)}°C</span>
+            </p>        
           </div>
           <p className="date">
             {
@@ -72,8 +76,8 @@ function SideBar({ setCity, weatherData, extraWeatherData }) {
           sunrise={convertToTimeZoneUnix(weatherData.sys.sunrise, weatherData.timezone)}
           sunset={convertToTimeZoneUnix(weatherData.sys.sunset, weatherData.timezone)}
           nextDaySunrise={nextDaySunrise}
-          timeInLocation={adjustTimeToTimeZone(extraWeatherData.dt, extraWeatherData.timezone)}
-          />
+          timeInLocation={adjustTimeToTimeZone(extraWeatherData?.dt, extraWeatherData?.timezone)}         
+        />
       ) : null}
     </div>
   );
