@@ -15,14 +15,16 @@ function App() {
       <div className="background"></div>
       <SideBar className="sidebar" city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} error={error} />
         <div className="content">
-          <div className="sticky-container">
-            <div className="topbox">
-              <TopBox weatherData={weatherData} />
-            </div>
+          <div className="topbox">
+            <TopBox weatherData={weatherData} />
           </div>
           <div className="bottom-container">
-            <RainChart className="RainChart" forecastData={forecastData}/>
-            <TemperatureGraph className="TemperatureGraph" forecastData={forecastData}/>          
+            <div className="temperature-graph-container">
+              <TemperatureGraph className="TemperatureGraph" forecastData={forecastData}/>     
+            </div>
+            <div className="rain-chart-container">
+              <RainChart className="RainChart" forecastData={forecastData}/>     
+            </div>
           </div>
         </div>
     </div>
