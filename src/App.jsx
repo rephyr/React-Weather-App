@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import RainChart from './components/24HRainForecast/RainChart';
 import SideBar from './components/SideBar/SideBar';
 import TopBox from './components/MainLayout/TopBox'; 
 import TemperatureGraph from './components/24HForecast/TemperatureGraph';
@@ -20,6 +21,7 @@ function App() {
             </div>
           </div>
           <div className="bottom-container">
+            <RainChart className="RainChart" forecastData={forecastData}/>
             <TemperatureGraph className="TemperatureGraph" forecastData={forecastData}/>          
           </div>
         </div>
