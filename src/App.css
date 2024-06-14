@@ -7,16 +7,7 @@ body, html {
   margin: 0;
   padding: 0;
 }
-.App > .sidebar {
-  grid-column: 1 / 2;
-  overflow-y: auto; /* Optional: if your sidebar content is long */
-}
-.App > .content-container {
-  grid-column: 2 / 3;
-  overflow-y: auto; /* Enable scrolling for content */
-  display: flex;
-  flex-direction: column;
-}
+
 .background {
   position: absolute;
   top: 0;
@@ -46,20 +37,43 @@ body, html {
 .App {
   display: grid;
   grid-template-columns: 300px 1fr;
-  height: 100vh; /* Make .App fill the viewport */
-  overflow: auto; /* Enable scrolling within .App */
+  height: 100vh; 
+  overflow: auto; 
 }
 
 .content {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
+  height: 100%;
 }
 
 .bottom-container {
   margin-bottom: 25px;
   margin-top: auto;
 }
+
 .temperature-graph-container {
+  /* Ensure this container has a defined width or flex property to not stretch across the entire container */
+  flex: 1; /* Example to make it flexible but you can set a fixed width if preferred */
   margin-bottom: 10px;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center; /* Center children */
+  align-items: center; /* Center children vertically if needed */
+  width: 100%;
+  
+  margin-top: auto; 
+}
+
+.temperature-graph-container {
+  flex: 1; /* Allows this container to grow and take up space, pushing the seven-day-chart towards the center */
+  margin-bottom: 10px;
+}
+
+.seven-day-chart {
+  margin: auto;
+  margin-bottom: 25px;
 }
