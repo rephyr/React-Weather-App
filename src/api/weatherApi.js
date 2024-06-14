@@ -1,21 +1,33 @@
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-
 export const fetchWeatherData = (city) => {
   return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
     .then(response => {
       if (response.status !== 200) {
         throw new Error('City not found');
       }
-
       return response.json();
     })
     .then(data => data);
 };
 
-export const fetchExtraWeatherData = (lat, lon) => {
-    return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+export const fetch7DayForecast = (lat, lon) => {
+  return fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=8&appid=${apiKey}&units=metric`)
     .then(response => response.json())
-    .then(data => data);
+    .then(({list}) => {
+      const [, ...sevenDaysAhead] = list; 
+      return sevenDaysAhead; 
+    });
+}
+
+export const fetchExtraWeatherData = (lat, lon) => {
+  return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)    
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log("Extra data ", data);
+      return data;
+    });
 };
 
 export const fetch24hForecast = (lat, lon) => {
@@ -30,7 +42,6 @@ export const fetch24hForecast = (lat, lon) => {
           if (!forecastData.list) {
             return [];
           }
-
           const forecast24h = forecastData.list.map(item => {
             const utcDate = new Date(item.dt_txt + 'Z');
             const localDate = new Date(utcDate.getTime() + timeZoneOffsetInSeconds * 1000);
