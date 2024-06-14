@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Inter Light';
+  src: url('../../../fonts/static/Inter-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter ExtraLight';
+  src: url('../../../fonts/static/Inter-Thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter Thin';
+  src: url('../../../fonts/static/Inter-Thin.ttf') format('truetype');
+}
+
+.forecastContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(128, 128, 128, 0.4);
+  color: #ffffff;
+  border-radius: 10px;
+  width: 400px;
+  height: 512px;
+  padding: 10px;
+}
+
+.title{
+  font-size: 14px;
+  font-family: 'Inter Thin';
+}
+
+.dayForecast {
+  flex: 1;
+  align-items: flex-start;
+}
+
+.forecastContent {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Inter ExtraLight';
+}
+
+.forecastContent span {
+  flex: 1;
+}
+
+
+.forecastContent img {
+  flex: 0 0 auto;
+  color: #ffffff;
+}
+
+.forecastContent img {
+  width: 45px; 
+  height: 45px; 
+}
+
+.dayForecast:not(:last-child) {
+  border-bottom: 2px solid rgb(172, 172, 171);
+  margin-bottom: 15px;
+}
