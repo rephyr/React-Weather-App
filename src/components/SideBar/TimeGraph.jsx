@@ -5,8 +5,8 @@ import sunImage from '../../assets/sun.png';
 function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
   const svgWidth = 250;
   const svgHeight = 250;
-
-  // Convert UNIX timestamp to readable time
+  console.log("timeInLocation", timeInLocation);
+  // Convert UNIX time stamp to readable time
   const convertToReadableTime = (unixTime) => {
     const date = new Date(unixTime * 1000);
     const hours = date.getUTCHours();
@@ -46,23 +46,27 @@ function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
   }
 
   // Calculate the X position for the current time based on whether it's day or night
-  let currentTimePositionX;
+  let timeRange, timeProgress, currentTimePositionX;
   if (isNighttime) {
-    let timeRange = nextDaySunrise - sunset + 24 * 3600; 
-    let timeProgress;
-
-    if (timeInLocation >= sunset) {
-      // Time from sunset to timeInLocation
-      timeProgress = (timeInLocation - sunset) / timeRange;
-    } else {
-      // Time from sunset through midnight to timeInLocation
-      timeProgress = (timeInLocation + (24 * 3600 - sunset)) / timeRange;
-    }
-    currentTimePositionX = fixedSunsetPositionX + timeProgress * (fixedNextDaySunrisePositionX - fixedSunsetPositionX);
+      // Calculate time range for the night
+      timeRange = nextDaySunrise - sunset;
+      
+      // Calculate how far along the night we are
+      if (timeInLocation >= sunset) {
+          timeProgress = (timeInLocation - sunset) / timeRange;
+      } else {
+          // If timeInLocation is before sunset (early hours), adjust it by adding 24 hours
+          timeProgress = (timeInLocation + 24 * 3600 - sunset) / timeRange;
+          console.log("timeProgress", timeProgress);
+      }
+      
+      // Calculate current X position based on progress
+      currentTimePositionX = fixedSunsetPositionX + timeProgress * (fixedNextDaySunrisePositionX - fixedSunsetPositionX);
   } else {
-    let timeRange = sunset - sunrise;
-    let timeProgress = (timeInLocation - sunrise) / timeRange;
-    currentTimePositionX = fixedSunsetPositionX + timeProgress * (fixedNextDaySunrisePositionX - fixedSunsetPositionX);
+      // Daytime calculation remains the same
+      timeRange = sunset - sunrise;
+      timeProgress = (timeInLocation - sunrise) / timeRange;
+      currentTimePositionX = fixedSunsetPositionX + timeProgress * (fixedNextDaySunrisePositionX - fixedSunsetPositionX);
   }
 
   // Calculate Y position for the current time using the adjusted sine wave equation
