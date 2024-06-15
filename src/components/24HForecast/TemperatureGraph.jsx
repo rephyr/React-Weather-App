@@ -41,7 +41,6 @@ function TemperatureGraph({ forecastData}) {
     // for a smooth curve 
     const lineGenerator = line().curve(curveCardinal);
     const pathData = lineGenerator(points);
-    console.log(forecastData);
     const handleMouseMove = (event) => {
         const svgRect = svgRef.current.getBoundingClientRect();
         const x = event.clientX - svgRect.left;
