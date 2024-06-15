@@ -24,7 +24,7 @@ function ExtraWeatherData({ extraWeatherData}) {
                     <WiRain size={30} color="#fff" />
                     <div>
                         <p>Rain</p>
-                        <p>{extraWeatherData.rain ? extraWeatherData.rain['1h'] : 'No rain'} mm</p>
+                        <p>{extraWeatherData.rain ? `${parseFloat(extraWeatherData.rain['1h']).toFixed(1)} mm` : 'No rain'}</p>                    
                     </div>
                 </div>
                 <div className="weatherItem">
