@@ -57,7 +57,6 @@ function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
       } else {
           // If timeInLocation is before sunset (early hours), adjust it by adding 24 hours
           timeProgress = (timeInLocation + 24 * 3600 - sunset) / timeRange;
-          console.log("timeProgress", timeProgress);
       }
       
       // Calculate current X position based on progress
