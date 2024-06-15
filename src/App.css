@@ -54,26 +54,31 @@ body, html {
 }
 
 .temperature-graph-container {
-  /* Ensure this container has a defined width or flex property to not stretch across the entire container */
-  flex: 1; /* Example to make it flexible but you can set a fixed width if preferred */
+  flex: 1;
   margin-bottom: 10px;
 }
 
 .chart-container {
   display: flex;
-  justify-content: center; /* Center children */
-  align-items: center; /* Center children vertically if needed */
+  justify-content: center; 
+  align-items: center; 
   width: 100%;
   
   margin-top: auto; 
 }
 
 .temperature-graph-container {
-  flex: 1; /* Allows this container to grow and take up space, pushing the seven-day-chart towards the center */
+  flex: 1; 
   margin-bottom: 10px;
 }
 
 .seven-day-chart {
   margin: auto;
   margin-bottom: 25px;
+}
+
+.topbox {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
 }
