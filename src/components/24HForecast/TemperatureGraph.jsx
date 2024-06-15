@@ -41,21 +41,22 @@ function TemperatureGraph({ forecastData}) {
     // for a smooth curve 
     const lineGenerator = line().curve(curveCardinal);
     const pathData = lineGenerator(points);
-
+    console.log(forecastData);
     const handleMouseMove = (event) => {
         const svgRect = svgRef.current.getBoundingClientRect();
         const x = event.clientX - svgRect.left;
         const closestPointIndex = Math.round((x - minX) / (maxX - minX) * (forecastData.length - 1));
         
-        // Check if closestPointIndex is within the range of the forecastData array
         if (closestPointIndex >= 0 && closestPointIndex < forecastData.length) {
             const closestData = forecastData[closestPointIndex];
-            const titleText = `Time: ${new Date(closestData.dt * 1000).toLocaleTimeString
-                ([], { hour: '2-digit', minute: '2-digit', hour12: false })}, 
-                Temp: ${Math.round(closestData.main.temp)}°`;
-            setTooltip({ show: true, x: event.clientX, y: event.clientY, text: titleText });
+            // Splitting the titleText into an array of lines
+            const titleTextLines = [
+                `Time: ${new Date(closestData.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`,
+                `Temp: ${Math.round(closestData.main.temp)}°C`,
+                `Weather: ${closestData.weather[0].description}`
+            ];
+            setTooltip({ show: true, x: event.clientX, y: event.clientY, text: titleTextLines });
         } else {
-            // Hide the tooltip if closestPointIndex is out of range
             setTooltip({ show: false, x: 0, y: 0, text: "" });
         }
     };
@@ -82,13 +83,25 @@ function TemperatureGraph({ forecastData}) {
                 ))}
             </svg>
             {tooltip.show && 
-                <div style={{ position: 'fixed', top: tooltip.y, left: tooltip.x, 
-                backgroundColor: 'white', border: '1px solid black', padding: '10px' }}>
+                <div style={{ 
+                    position: 'fixed',
 
-                    {tooltip.text}
+                    top: tooltip.y, 
+                    left: tooltip.x, 
+                    top: `${tooltip.y-56}px`, 
+                    left: `${tooltip.x}px`, 
+                    backgroundColor: 'black', 
+                    color: 'white', 
+                    border: '1px solid white', 
+                    padding: '5px', 
+                    fontSize: '12px',
+                    borderRadius: '4px', 
+                    whiteSpace: 'pre-line' 
+                }}>
+                    {tooltip.text.join('\n')} 
                 </div>
             }
-        </div>
+         </div>
     );
 }
 
