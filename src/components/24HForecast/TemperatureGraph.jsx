@@ -85,9 +85,6 @@ function TemperatureGraph({ forecastData}) {
             {tooltip.show && 
                 <div style={{ 
                     position: 'fixed',
-
-                    top: tooltip.y, 
-                    left: tooltip.x, 
                     top: `${tooltip.y-56}px`, 
                     left: `${tooltip.x}px`, 
                     backgroundColor: 'black', 
@@ -95,6 +92,7 @@ function TemperatureGraph({ forecastData}) {
                     border: '1px solid white', 
                     padding: '5px', 
                     fontSize: '12px',
+                    fontFamily: 'Arial',
                     borderRadius: '4px', 
                     whiteSpace: 'pre-line' 
                 }}>
