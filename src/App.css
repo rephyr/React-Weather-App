@@ -14,7 +14,6 @@ body, html {
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url('./assets/storm-clouds.jpg');  
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed; 
@@ -63,7 +62,6 @@ body, html {
   justify-content: center; 
   align-items: center; 
   width: 100%;
-  
   margin-top: auto; 
 }
 
@@ -80,5 +78,10 @@ body, html {
 .topbox {
   display: flex;
   align-items: center; 
-  justify-content: space-between;
+}
+
+.weather-icon{
+  width: 200px;
+  height: 200px;
+  margin-top: px;
 }
