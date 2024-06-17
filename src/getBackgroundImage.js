@@ -1,27 +1,26 @@
 import clearImage from './assets/clear.jpg';
-import rainyImage from './assets/clouds.jpg';
+import rainyImage from './assets/rain.jpg';
 import cloudyImage from './assets/clouds.jpg';
-import snowImage from './assets/clouds.jpg';
-import rainImage from './assets/clouds.jpg';
-import thunderstormImage from './assets/clouds.jpg';
+import snowImage from './assets/snow.jpg';
+import thunderstormImage from './assets/thunder.jpg';
 import defaultImage from './assets/clouds.jpg';
 
 const getBackgroundImage = (weatherCondition) => {
     switch (weatherCondition) {
         case "Clear":
-            return `url(${clearImage})`;
+            return clearImage;
         case 'Rain':
-            return `url(${rainyImage})`;
+            return rainyImage;
         case 'Clouds':
-            return `url(${cloudyImage})`;
+            return cloudyImage;
         case 'Snow':
-            return `url(${snowImage})`;
+            return snowImage;
         case 'Drizzle':
-            return `url(${rainImage})`;
+            return rainyImage;
         case 'Thunderstorm':
-            return `url(${thunderstormImage})`;
+            return thunderstormImage;
         default:
-            return `url(${defaultImage})`;
+            return defaultImage;
     }
 };
 
