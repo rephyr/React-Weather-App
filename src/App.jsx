@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import RainChart from './components/24HRainForecast/RainChart';
+import RainChart from './components/MainLayout/RainChart';
 import SideBar from './components/SideBar/SideBar';
 import TopBox from './components/MainLayout/TopBox'; 
 import SevenDayForecastChart from './components/SevenDayForecast/SevenDayForecastChart';
-import TemperatureGraph from './components/24HForecast/TemperatureGraph';
+import TemperatureGraph from './components/dayForecast/TemperatureGraph';
 import useWeatherData from './hooks/useWeatherData';
 import getBackgroundImage from './getBackgroundImage';
 

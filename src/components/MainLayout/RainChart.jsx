@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
-import './RainChart.css';
 
 function RainChart({ forecastData }) {
   const chartRef = useRef(null);
@@ -92,16 +91,15 @@ function RainChart({ forecastData }) {
                 ctx.closePath();
               }
           
-              // Set the fill style and draw the rounded rectangle
               ctx.fillStyle = 'rgba(128, 128, 128, 0.5)';
-              const borderRadius = 20; // Adjust the border radius as needed
+              const borderRadius = 20; 
               drawRoundedRect(ctx, 0, 0, width, height, borderRadius);
               ctx.fill();
             }
           }]
       });
     }
-  }, [forecastData]); // Re-run when forecastData changes
+  }, [forecastData]); 
 
   if (!forecastData) {
     return <div>Loading...</div>;
