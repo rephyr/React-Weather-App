@@ -3,16 +3,6 @@
   src: url('../../../fonts/static/Inter-Light.ttf') format('truetype');
 }
 
-@font-face {
-  font-family: 'Inter ExtraLight';
-  src: url('../../../fonts/static/Inter-Thin.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inter Thin';
-  src: url('../../../fonts/static/Inter-Thin.ttf') format('truetype');
-}
-
 .forecastContainer {
   display: flex;
   flex-direction: column;
@@ -26,7 +16,8 @@
 
 .title{
   font-size: 14px;
-  font-family: 'Inter Thin';
+  font-family: 'Inter Light';
+  color: #fff;
 }
 
 .dayForecast {
@@ -38,17 +29,15 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  font-family: 'Inter ExtraLight';
-}
+  font-family: 'Inter Light';
+  color: #fff;}
 
 .forecastContent span {
   flex: 1;
 }
 
-
 .forecastContent img {
   flex: 0 0 auto;
-  color: #ffffff;
 }
 
 .forecastContent img {
