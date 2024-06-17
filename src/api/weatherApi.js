@@ -25,7 +25,6 @@ export const fetchExtraWeatherData = (lat, lon) => {
       return response.json();
     })
     .then(data => {
-      console.log("Extra data ", data);
       return data;
     });
 };
