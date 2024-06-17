@@ -11,19 +11,43 @@ import getBackgroundImage from './getBackgroundImage';
 function App() {
   const [city, setCity] = React.useState('London');
   const { weatherData, extraWeatherData, forecastData, sevenDayForecast, error } = useWeatherData(city);
-  const [backgroundImageUrl, setBackgroundImage] = React.useState('');
+  const [backgroundLayerOneUrl, setBackgroundLayerOneUrl] = React.useState('');
+  const [backgroundLayerTwoUrl, setBackgroundLayerTwoUrl] = React.useState('');
+  const [activeLayer, setActiveLayer] = React.useState(1); 
 
+  // Background transition
   React.useEffect(() => {
-    if (weatherData) {
-      const imageUrl = getBackgroundImage(weatherData.weather[0].main);
-      console.log('Image URL:', imageUrl);
-      setBackgroundImage(imageUrl);
+    if (weatherData && weatherData.weather && weatherData.weather[0] && weatherData.weather[0].main) {
+      const newBackgroundImageUrl = getBackgroundImage(weatherData.weather[0].main);
+      // Change background if new url is different from the current one
+      if ((activeLayer === 1 && newBackgroundImageUrl !== backgroundLayerOneUrl) || 
+          (activeLayer === 2 && newBackgroundImageUrl !== backgroundLayerTwoUrl)) {
+        const img = new Image();
+        img.onload = () => {
+          // Determine which layer to update based on the active layer
+          if (activeLayer === 1) {
+            setBackgroundLayerTwoUrl(newBackgroundImageUrl);
+            setActiveLayer(2); 
+          } else {
+            setBackgroundLayerOneUrl(newBackgroundImageUrl);
+            setActiveLayer(1); 
+          }
+        };
+        img.src = newBackgroundImageUrl;
+      }
     }
-  }, [weatherData]);
-  
+  }, [weatherData, activeLayer, backgroundLayerOneUrl, backgroundLayerTwoUrl]);
+
   return (
     <div className="App">
-        <div key={backgroundImageUrl} className="background" style={{ backgroundImage: backgroundImageUrl }}></div>
+      <div
+        className={`background background-layer-one ${activeLayer === 1 ? 'visible' : ''}`}
+        style={{ backgroundImage: `url(${backgroundLayerOneUrl})` }}
+      ></div>
+      <div
+        className={`background background-layer-two ${activeLayer === 2 ? 'visible' : ''}`}
+        style={{ backgroundImage: `url(${backgroundLayerTwoUrl})` }}
+      ></div>
       <SideBar className="sidebar" city={city} setCity={setCity} weatherData={weatherData} extraWeatherData={extraWeatherData} error={error} />   
       <div className="content">
         <div className="topbox">

@@ -16,12 +16,24 @@ body, html {
   left: 0;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed; 
+  background-attachment: fixed;
   z-index: -1;
   height: 100%;
+  transition: opacity 1.5s ease-in-out;
+  opacity: 0;
 }
 
-.background::before {
+.background-layer-one, .background-layer-two {
+  opacity: 0; 
+}
+
+.visible {
+  opacity: 1;
+  z-index: -1; 
+}
+
+
+.background::before{
   content: "";
   position: absolute;
   top: 0;
