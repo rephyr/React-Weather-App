@@ -5,7 +5,6 @@ import sunImage from '../../assets/sun.png';
 function TimeGraph({ sunrise, sunset, nextDaySunrise, timeInLocation }) {
   const svgWidth = 250;
   const svgHeight = 250;
-  console.log("timeInLocation", timeInLocation);
   // Convert UNIX time stamp to readable time
   const convertToReadableTime = (unixTime) => {
     const date = new Date(unixTime * 1000);
