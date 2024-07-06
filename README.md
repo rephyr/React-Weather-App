@@ -13,13 +13,6 @@ The project is structured as follows:
 - `hooks/` - Contains the custom React hooks.
 - `public/` - Contains the static files served by the application.
 
-## Key Files
-
-- `src/api/weatherApi.js` - Contains the API calls for fetching weather data.
-- `src/components/24HForecast/TemperatureGraph.js` - Displays the temperature graph for the 24-hour forecast.
-- `src/App.js` - The main application component.
-- `src/hooks/useWeatherData.js` - A custom hook for fetching and managing weather data.
-
 ## Installation
 
 1. Clone the repository.
