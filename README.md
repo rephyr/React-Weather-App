@@ -2,9 +2,6 @@
 
 This is a weather forecasting application built with React. It fetches weather data from an API and displays a 24-hour forecast.
 
-## Work in Progress
-
-This project is a work in progress. I am actively developing this program.
 
 ## Project Structure
 
@@ -15,13 +12,6 @@ The project is structured as follows:
 - `components/` - Contains the React components.
 - `hooks/` - Contains the custom React hooks.
 - `public/` - Contains the static files served by the application.
-
-## Key Files
-
-- `src/api/weatherApi.js` - Contains the API calls for fetching weather data.
-- `src/components/24HForecast/TemperatureGraph.js` - Displays the temperature graph for the 24-hour forecast.
-- `src/App.js` - The main application component.
-- `src/hooks/useWeatherData.js` - A custom hook for fetching and managing weather data.
 
 ## Installation
 
